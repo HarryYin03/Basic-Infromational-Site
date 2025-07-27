@@ -1,29 +1,23 @@
-const express = require('express');
-const path = require('path');
-const app = express();
+// app-dotenv.js
 
-const port = 3000;
+// 1. Load environment variables as early as possible in your application
+// This line reads your .env file and populates process.env
+require('dotenv').config();
 
-app.use(express.static(path.join(__dirname, 'public')));
+// 2. Access environment variables using process.env
+const videoUrl = process.env.VIDEO_URL;
+const nodeEnv = process.env.NODE_ENV || 'not set'; // Demonstrating a default if not set
 
-app.get('/', (req, res) => {
-    res.sendFile('index.html', {root: path.join(__dirname, 'public')});
-})
+console.log('--- .env File Method (with dotenv) ---');
+console.log(`Node Environment (NODE_ENV): ${nodeEnv}`);
 
-app.get('/about', (req, res) => {
-    res.sendFile('about.html', {root: path.join(__dirname, 'public')});
-})
+if (videoUrl) {
+    console.log(`Video URL from .env file: ${videoUrl}`);
+    console.log('You can access this video here:');
+    console.log(videoUrl);
+} else {
+    console.error('Error: VIDEO_URL is NOT set in your .env file or environment variables!');
+    console.error('Please ensure VIDEO_URL="your_video_url" is present in your .env file.');
+}
 
-app.get('/contact-me', (req, res) => {
-    res.sendFile('contact-me.html', {root: path.join(__dirname, 'public')});
-})
-
-app.use((req, res) => {
-    res.status(404);
-    res.sendFile('404.html', {root: path.join(__dirname, 'public')});
-})
-
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
-    console.log(`Press Ctrl+C to stop the server`);
-})
+console.log('------------------------------------');
