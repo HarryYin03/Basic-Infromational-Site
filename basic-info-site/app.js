@@ -1,23 +1,31 @@
-// app-dotenv.js
+const express = require("express");
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// 1. Load environment variables as early as possible in your application
-// This line reads your .env file and populates process.env
-require('dotenv').config();
+const authorRouter = require("./routes/authorRouter");
+const bookRouter = require("./routes/bookRouter");
+const indexRouter = require("./routes/indexRouter");
+const userRouter = require("./routes/userRouter");
 
-// 2. Access environment variables using process.env
-const videoUrl = process.env.VIDEO_URL;
-const nodeEnv = process.env.NODE_ENV || 'not set'; // Demonstrating a default if not set
+app.use("/authors", authorRouter);
+app.use("/books", bookRouter);
+app.use("/", indexRouter);
+app.use("/users", userRouter);
 
-console.log('--- .env File Method (with dotenv) ---');
-console.log(`Node Environment (NODE_ENV): ${nodeEnv}`);
+app.use((err, req, res, next) => {
+    res.status(err.statusCode || 500).send(err.message || "Internal Server Error");
+})
 
-if (videoUrl) {
-    console.log(`Video URL from .env file: ${videoUrl}`);
-    console.log('You can access this video here:');
-    console.log(videoUrl);
-} else {
-    console.error('Error: VIDEO_URL is NOT set in your .env file or environment variables!');
-    console.error('Please ensure VIDEO_URL="your_video_url" is present in your .env file.');
-}
 
-console.log('------------------------------------');
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+});
+
+
+
+// app.get("/users/:id", (req, res) => {
+//     res.send("This is a controller function")
+// })
+

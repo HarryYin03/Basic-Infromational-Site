@@ -1,0 +1,19 @@
+<!-- send-message.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Send Message to User</title>
+</head>
+
+<body>
+    <h1>Send a message to Odin</h1>
+    <form action="http://localhost:3000/users/odin/message" method="POST">
+        <label for="message">Message:</label><br />
+        <input type="text" id="message" name="message" required><br /><br />
+        <button type="submit">Send</button>
+    </form>
+</body>
+
+</html>
