@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movies</title>
+</head>
+
+<body>
+    <h1>Movies</h1>
+
+    <!-- Include the navbar partial and pass links -->
+    <%- include('navbar', { links: links }) %>
+
+        <ul>
+            <!-- Loop through each movie and include the movie partial -->
+            <% movies.forEach(movie=> { %>
+                <%- include('movie', { movie: movie }) %>
+                    <% }) %>
+        </ul>
+</body>
+
+</html>

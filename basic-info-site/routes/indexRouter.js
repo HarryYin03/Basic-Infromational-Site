@@ -1,9 +1,24 @@
-const { Router } = require("express");
-const indexRouter = Router();
+const express = require("express");
+const router = express.Router();
 
-indexRouter.get("/", (req, res) => res.send("Homepage"));
-indexRouter.get("/about", (req, res) => res.send("About page"));
-indexRouter.get("/contact", (req, res) => res.send("Contact page"));
-indexRouter.post("/contact", (req, res) => res.send("Received contact form"));
+const links = [
+    { href: "/", text: "Home" },
+    { href: "/about", text: "About" },
+    { href: "/contact", text: "Contact" },
+];
 
-module.exports = indexRouter;
+const users = ["Rose", "Cake", "Biff"];
+
+router.get("/", (req, res) => {
+    res.render("index", { links, users });
+});
+
+router.get("/about", (req, res) => {
+    res.render("about", { links });
+});
+
+router.get("/contact", (req, res) => {
+    res.render("contact", { links });
+});
+
+module.exports = router;
